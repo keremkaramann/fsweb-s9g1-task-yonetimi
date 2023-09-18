@@ -5,22 +5,57 @@ import TaskForm from "./TaskForm";
 import TaskHookForm from "./TaskHookForm";
 import PeopleForm from "./PeopleForm";
 import { initialTasks, initialTeam } from "./data";
-
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [tasks, setTasks] = useState(initialTasks);
   const [team, setTeam] = useState(initialTeam);
 
   function handleTaskSubmit(yeniTask) {
-    setTasks([yeniTask, ...tasks])
+    setTasks([yeniTask, ...tasks]);
+    toast.warn("Yeni Görev Eklendi", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
   }
 
   function handlePeopleSubmit(yeniKisi) {
-    setTeam([...team, yeniKisi])
+    setTeam([...team, yeniKisi]);
+    toast.info("Task'a yeni isim eklendi!", {
+      position: "top-center",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
   }
 
   function handleComplete(id) {
-    console.log("tamamlama fonksiyonunu buraya yazın")
+    const updatedTasks = tasks.map((task) =>
+      task.id === id ? { ...task, status: "yapıldı" } : task
+    );
+    setTasks(updatedTasks);
+    toast.success("Wow Görev Yapıldı!", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
   }
 
   return (
@@ -59,7 +94,7 @@ function App() {
           </div>
         </div>
       </div>
-
+      <ToastContainer />
     </div>
   );
 }
