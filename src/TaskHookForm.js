@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { nanoid } from "nanoid";
 import { useForm } from "react-hook-form";
 
@@ -14,7 +14,6 @@ const TaskHookForm = ({ kisiler, submitFn }) => {
       title: "",
       description: "",
       people: [],
-      id: nanoid(),
       status: "yapılacak",
     },
     mode: "all",
@@ -31,8 +30,13 @@ const TaskHookForm = ({ kisiler, submitFn }) => {
     }
   };
 
+  const onSubmit = (formdata, e) => {
+    submitFn({ ...formdata, id: nanoid(5) });
+    e.target.reset();
+  };
+
   return (
-    <form className="taskForm" onSubmit={handleSubmit(submitFn)}>
+    <form className="taskForm" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-line">
         <label className="input-label" htmlFor="title">
           Başlık
